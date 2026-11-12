@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-compat.url = "github:edolstra/flake-compat";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -33,16 +32,16 @@
           ...
         }:
         let
+          ZIG = pkgs.zig_0_17;
+          ZLS = pkgs.zls_0_17;
+
           nativeBuildInputs = [
             # Compiler
-            pkgs.zig_0_16
+            ZIG
 
             # LSP
             pkgs.nil
-            pkgs.zls
-
-            # Music Player
-            pkgs.sox # Use this command as: `play result.wav`
+            ZLS
 
             # zon2nix
             pkgs.zon2nix
@@ -72,7 +71,7 @@
 
             # Zig
             programs.zig.enable = true;
-            settings.formatter.zig.command = lib.getExe pkgs.zig_0_16;
+            settings.formatter.zig.command = lib.getExe ZIG;
 
             # GitHub Actions
             programs.actionlint.enable = true;
